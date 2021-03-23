@@ -1,5 +1,6 @@
 package me.swipez.opshearing;
 
+import me.swipez.opshearing.bstats.Metrics;
 import me.swipez.opshearing.items.ItemLoreManager;
 import me.swipez.opshearing.items.ItemManager;
 import me.swipez.opshearing.listeners.AnvilClick;
@@ -26,6 +27,7 @@ public final class OPShearing extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SheepListener(this), this);
         saveDefaultConfig();
         getConfig().options().copyDefaults();
+        new Metrics(this, 10784);
 
     }
 
