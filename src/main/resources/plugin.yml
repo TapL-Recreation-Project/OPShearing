@@ -1,0 +1,5 @@
+name: OPShearing
+version: ${project.version}
+main: me.swipez.opshearing.OPShearing
+api-version: 1.16
+authors: [ notnotnotswipez ]
