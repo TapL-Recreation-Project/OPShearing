@@ -36,7 +36,6 @@ public class SheepListener implements Listener {
         Player player = event.getPlayer();
         ItemStack mainhand = player.getInventory().getItemInMainHand();
         if (equals(mainhand, ItemManager.SUPER_DYE) && event.getRightClicked().getType().equals(EntityType.SHEEP)){
-            mainhand.setAmount(mainhand.getAmount()-1);
             Sheep sheep = (Sheep) event.getRightClicked();
             plugin.opSheep.add(sheep);
         }
