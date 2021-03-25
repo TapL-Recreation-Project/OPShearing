@@ -17,8 +17,10 @@ public class AnvilPrepareItemListener implements Listener {
     public void onAnvilMakeItem(PrepareAnvilEvent event){
         int bookslot = 0;
         int bookcount = 0;
+        int itemcount = 0;
         for (int i=0;i<event.getInventory().getSize()-1;i++){
             if (event.getInventory().getItem(i) != null){
+                itemcount++;
                 if (event.getInventory().getItem(i).getType().equals(Material.ENCHANTED_BOOK)){
                     bookslot = i;
                     bookcount++;
@@ -64,6 +66,26 @@ public class AnvilPrepareItemListener implements Listener {
                 event.setResult(ebookstack);
             } else {
                 event.setResult(null);
+            }
+        }
+        else if (bookcount == 0 && itemcount == 2){
+            if (event.getInventory().getItem(0).getType().equals(event.getInventory().getItem(1).getType())){
+                ItemStack firststack = event.getInventory().getItem(0).clone();
+                ItemStack secondstack = event.getInventory().getItem(1);
+                ItemMeta meta = firststack.getItemMeta();
+                Map<Enchantment, Integer> secondenchants = secondstack.getEnchantments();
+                for (Enchantment enchantment : secondenchants.keySet()){
+                    if (!firststack.containsEnchantment(enchantment)){
+                        meta.addEnchant(enchantment, secondenchants.get(enchantment), true);
+                    }
+                    else {
+                        meta.addEnchant(enchantment, secondenchants.get(enchantment) + firststack.getEnchantmentLevel(enchantment), true);
+                    }
+                }
+                if (firststack.getEnchantments().size() > 0 && secondstack.getEnchantments().size() > 0){
+                    firststack.setItemMeta(meta);
+                    event.setResult(firststack);
+                }
             }
         }
     }
